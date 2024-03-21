@@ -27,13 +27,4 @@ jobs:
         cd mongo_rest && /opt/gradle/gradle-4.4/bin/gradle :safetraxrest:distzip
         ls mongo_rest/safetraxrest/build/distributions
         
-    - name: Store artifacts in GCP
-      run: gsutil cp mongo_rest/safetraxrest/build/distributions/safetraxrest.zip gs://test-live-deploy/SERVERV2
-      env:
-        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
-        
-    - name: Deploy to another server in GCP
-      run: ssh -i ${{ secrets.SSH_PRIVATE_KEY_PATH }} venu@cicd-test -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "sudo /home/venu/ETS-mongoser-deployment-updated.sh"
-      env:
-        SSH_PRIVATE_KEY_PATH: /tmp/ssh_key
-      shell: bash
+   
